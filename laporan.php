@@ -2,10 +2,10 @@
 <?php include 'sidebar.php'; ?>
 <!-- isinya -->
 <?php
-$i1 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(qty) as totqty FROM laporan"));
-$i2 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(qty*harga_modal) as totdpt FROM laporan"));
-$i3 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal-qty*harga_modal) as totdpt1 FROM laporan"));
-$i4 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal) as isub FROM laporan"));
+$i1 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(qty)  as totqty FROM laporan WHERE cart_type='SELL'"));
+$i2 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(qty*harga_modal) as totdpt FROM laporan WHERE cart_type='SELL'"));
+$i3 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal-qty*harga_modal) as totdpt1 FROM laporan WHERE cart_type='SELL'"));
+$i4 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal) as isub FROM laporan WHERE cart_type='SELL'"));
 ?>
     <h1 class="h3 mb-2">Data Laporan</h1>
         <div class="row">
@@ -40,7 +40,7 @@ $i4 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal) as isub FROM l
 
         </div>
 <hr>
-<table class="table table-striped table-sm table-bordered dt-responsive nowrap" id="table" width="100%">
+<table class="table table-striped table-sm table-bordered dt-responsive nowrap" id="laporanTbl" width="100%">
 <thead>
   <tr>
     <th>No</th>
@@ -53,49 +53,6 @@ $i4 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal) as isub FROM l
     <th>Opsi</th>
   </tr>
 </thead>
-<tbody>
-<?php 
-    $no = 1;
-    $data_laporan = mysqli_query($conn,"SELECT * FROM inv WHERE status='selesai' ORDER BY invid ASC");
-    while($d = mysqli_fetch_array($data_laporan)){
-      $oninv = $d['invoice'];
-        ?>
-  <tr>
-    <td><?php echo $no++; ?></td>
-    <td><a href="invoice.php?detail=<?php echo $oninv ?>"><?php echo $d['invoice']; ?></a></td>
-    <td><?php                    
-  $result1 = mysqli_query($conn,"SELECT SUM(qty) AS count FROM laporan WHERE invoice='$oninv'");
-  $cekrow = mysqli_num_rows($result1);
-  $row1 = mysqli_fetch_assoc($result1);
-  $count = $row1['count'];
-  if($cekrow > 0){
-      echo ribuan($count);
-      } else {
-          echo '0';
-      }?></td>
-    <td>Rp.<?php                    
-  $result2 = mysqli_query($conn,"SELECT SUM(subtotal) AS count1 FROM laporan WHERE invoice='$oninv'");
-  $cekrow1 = mysqli_num_rows($result2);
-  $row2 = mysqli_fetch_assoc($result2);
-  $count1 = $row2['count1'];
-  if($cekrow1 > 0){
-      echo ribuan($count1);
-      } else {
-          echo '0';
-      }?></td>
-    <td>Rp.<?php echo ribuan($d['pembayaran']); ?></td>
-    <td>Rp.<?php echo ribuan($d['kembalian']); ?></td>
-    <td><?php echo $d['tgl_inv']; ?></td>
-    <td>
-      <form method="post"> 
-        <input type="hidden" name="nona" value="<?php echo $oninv ?>">
-        <button type="submit" name="Remove" class="btn btn-danger btn-xs">
-          <i class="fas fa-trash-alt fa-xs mr-1"></i>Hapus</button>
-      </form>
-    </td>
-  </tr>
-  <?php } ?>
-</tbody>
 </table>
 <?php 
 if(isset($_POST['Remove'])){

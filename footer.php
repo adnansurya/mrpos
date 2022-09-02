@@ -28,6 +28,35 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#table').DataTable();
+            $('#laporanTbl').DataTable({
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'ajax_laporan.php',
+                    type:'POST',
+                    success: function(result){
+                      console.log('my message' + JSON.stringify(result));
+                      // let obj = JSON.parse(result);
+
+                      // console.log(JSON.stringify(obj.aaData));
+                      
+
+                      
+
+                    }
+                },
+                'columns': [
+                  { data: 'no' },
+                  { data: 'invoice' },
+                  { data: 'qty' },
+                  { data: 'subtotal' },
+                  { data: 'pembayaran' },
+                  { data: 'kembalian' },
+                  { data: 'tanggal' },
+                  { data: 'tombol' }
+                ]
+            });
         } );
         $('#cart').dataTable({searching: false, paging: false, info: false});
     </script>
