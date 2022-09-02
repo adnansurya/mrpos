@@ -18,9 +18,7 @@
               $_SESSION['username'] = $cariuser['username'];
               $_SESSION['log'] = "login";
 
-              if($cariuser){ 
-                  echo '<script>alert("Data yang anda masukan benar");window.location="index.php"</script>';
-              }else{
+              if(!$cariuser){
                   echo '<script>alert("Data yang anda masukan salah");history.go(-1);</script>';
               }
               echo '<script>alert("Anda Berhasil Login");window.location="index.php"</script>';

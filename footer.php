@@ -34,17 +34,17 @@
                 'serverMethod': 'post',
                 'ajax': {
                     'url':'ajax_laporan.php',
-                    type:'POST',
-                    success: function(result){
-                      console.log('my message' + JSON.stringify(result));
-                      // let obj = JSON.parse(result);
+                    // type:'POST',
+                    // success: function(result){
+                    //   console.log('my message' + JSON.stringify(result));
+                    //   // let obj = JSON.parse(result);
 
-                      // console.log(JSON.stringify(obj.aaData));
+                    //   // console.log(JSON.stringify(obj.aaData));
                       
 
                       
 
-                    }
+                    // }
                 },
                 'columns': [
                   { data: 'no' },
@@ -55,6 +55,31 @@
                   { data: 'kembalian' },
                   { data: 'tanggal' },
                   { data: 'tombol' }
+                ],
+                "columnDefs": [
+                    {
+                        // The `data` parameter refers to the data for the cell (defined by the
+                        // `data` option, which defaults to the column being worked with, in
+                        // this case `data: 0`.
+                        "targets": 1,
+                        "render": function ( data, type, row ) {
+                            // return data +' ('+ row[3]+')';
+                            return `<a href="invoice.php?detail=`+data+`">`+data+`</a>`;
+                        }
+                       
+                    },{
+                        "targets": 7,
+                        "visible": false,
+                        "render": function ( data, type, row ) {                                                      
+                            return `<form method="post"> 
+                                     <input type="hidden" name="nona" value="`+data+`">
+                                     <button type="submit" name="Remove" class="btn btn-danger btn-xs">
+                                       <i class="fas fa-trash-alt fa-xs mr-1"></i>Hapus</button>
+                                    </form>`;
+                                  
+                        }
+                       
+                    }
                 ]
             });
         } );

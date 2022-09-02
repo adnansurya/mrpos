@@ -16,7 +16,7 @@ $jsArray2 = "var harga_modal = new Array();";
     <datalist id="datalist1">
         <?php if(mysqli_num_rows($dataselect)) {?>
             <?php while($row_brg= mysqli_fetch_array($dataselect)) {?>
-                <option value="<?php echo $row_brg["kode_produk"]?>"> <?php echo $row_brg["kode_produk"]?>
+                <option value="<?php echo $row_brg["kode_produk"]?>"> <?php echo $row_brg["nama_produk"]?>
             <?php $jsArray .= "nama_produk['" . $row_brg['kode_produk'] . "'] = {nama_produk:'" . addslashes($row_brg['nama_produk']) . "'};";
             $jsArray1 .= "harga_jual['" . $row_brg['kode_produk'] . "'] = {harga_jual:'" . addslashes($row_brg['harga_jual']) . "'};";
             $jsArray2 .= "harga_modal['" . $row_brg['kode_produk'] . "'] = {harga_modal:'" . addslashes($row_brg['harga_modal']) . "'};"; } ?>
