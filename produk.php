@@ -6,7 +6,7 @@
         <button class="btn btn-primary btn-sm border-0 float-right" type="button" data-toggle="modal" data-target="#TambahProduk">Tambah Produk</button>
     </h1>
 <hr>
-<table class="table table-striped table-sm table-bordered dt-responsive nowrap" id="table" width="100%">
+<table class="table table-striped table-sm table-bordered dt-responsive nowrap" id="produkTbl" width="100%">
 <thead>
   <tr>
     <th>No</th>
@@ -28,8 +28,8 @@
     <td><?php echo $no++; ?></td>
     <td><?php echo $d['kode_produk']; ?></td>
     <td><?php echo $d['nama_produk']; ?></td>
-    <td>Rp.<?php echo ribuan($d['harga_modal']); ?></td>
-    <td>Rp.<?php echo ribuan($d['harga_jual']); ?></td>
+    <td><?php echo $d['harga_modal']; ?></td>
+    <td><?php echo $d['harga_jual']; ?></td>
     <td><?php echo $d['tgl_input']; ?></td>
     <td>
         <button type="button" class="btn btn-primary btn-xs mr-1" data-toggle="modal" data-target="#EditProduk<?php echo $d['idproduk']; ?>">

@@ -26,8 +26,37 @@
     <script src="assets/vendor/datatables/dataTables.responsive.min.js"></script>
     <script src="assets/vendor/datatables/responsive.bootstrap4.min.js"></script>
     <script type="text/javascript">
+
+      function ribuanJs(angka){
+        let numberFormatter = Intl.NumberFormat('id-ID');
+        return numberFormatter.format(angka);
+      }
         $(document).ready(function() {
             $('#table').DataTable();
+            $('#produkTbl').DataTable({
+              "columnDefs": [
+                    {
+                        "targets": 3,
+                        "render": function ( data, type, row ) {
+                            // return data +' ('+ row[3]+')';
+                            return 'Rp. '+ ribuanJs(data);
+                        }
+                       
+                    },
+                    {
+                        "targets": 4,
+                        "render": function ( data, type, row ) {
+                            // return data +' ('+ row[3]+')';
+                            return 'Rp. '+ ribuanJs(data);
+                        }
+                       
+                    },
+                    {
+                        "targets": 5,
+                        "visible": false                                               
+                    }
+                ]
+            });
             $('#laporanTbl').DataTable({
                 'processing': true,
                 'serverSide': true,
@@ -38,12 +67,7 @@
                     // success: function(result){
                     //   console.log('my message' + JSON.stringify(result));
                     //   // let obj = JSON.parse(result);
-
-                    //   // console.log(JSON.stringify(obj.aaData));
-                      
-
-                      
-
+                    //   // console.log(JSON.stringify(obj.aaData));                      
                     // }
                 },
                 'columns': [
