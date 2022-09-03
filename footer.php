@@ -42,7 +42,7 @@
                             return 'Rp. '+ ribuanJs(data);
                         }
                        
-                    },
+                    },  
                     {
                         "targets": 4,
                         "render": function ( data, type, row ) {
@@ -81,6 +81,30 @@
                   { data: 'tombol' }
                 ],
                 "columnDefs": [
+                  {
+                        "targets": 3,
+                        "render": function ( data, type, row ) {
+                            // return data +' ('+ row[3]+')';
+                            return 'Rp. '+ ribuanJs(data);
+                        }
+                       
+                    },  
+                    {
+                        "targets": 4,
+                        "render": function ( data, type, row ) {
+                            // return data +' ('+ row[3]+')';
+                            return 'Rp. '+ ribuanJs(data);
+                        }
+                       
+                    },
+                    {
+                        "targets": 5,
+                        "render": function ( data, type, row ) {
+                            // return data +' ('+ row[3]+')';
+                            return 'Rp. '+ ribuanJs(data);
+                        }
+                       
+                    },
                     {
                         // The `data` parameter refers to the data for the cell (defined by the
                         // `data` option, which defaults to the column being worked with, in

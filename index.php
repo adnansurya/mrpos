@@ -7,24 +7,25 @@ $jsArray2 = "var harga_modal = new Array();";
  ?>
 <!-- isinya -->
 <form method="post">
-<div class="row">
-
-  <div class="col-sm-4 col-md-4 col-lg-3 mb-3">
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-4 mb-3">
     <label class="small text-muted mb-1">Kode Produk</label>
-    <div class="position-relative">
-    <input type="text" name="Ckdproduk" class="form-control form-control-sm" list="datalist1" onchange="changeValue(this.value)" required autofocus>
-    <datalist id="datalist1">
-        <?php if(mysqli_num_rows($dataselect)) {?>
-            <?php while($row_brg= mysqli_fetch_array($dataselect)) {?>
-                <option value="<?php echo $row_brg["kode_produk"]?>"> <?php echo $row_brg["nama_produk"]?>
-            <?php $jsArray .= "nama_produk['" . $row_brg['kode_produk'] . "'] = {nama_produk:'" . addslashes($row_brg['nama_produk']) . "'};";
-            $jsArray1 .= "harga_jual['" . $row_brg['kode_produk'] . "'] = {harga_jual:'" . addslashes($row_brg['harga_jual']) . "'};";
-            $jsArray2 .= "harga_modal['" . $row_brg['kode_produk'] . "'] = {harga_modal:'" . addslashes($row_brg['harga_modal']) . "'};"; } ?>
-        <?php } ?>
-    </datalist>
-    <span class="position-absolute icon-qr"><i class="fas fa-qrcode text-muted"></i></span>
+      <div class="position-relative">
+      <input type="text" name="Ckdproduk" class="form-control form-control-sm" list="datalist1" onchange="changeValue(this.value)" required autofocus>
+      <datalist id="datalist1">
+          <?php if(mysqli_num_rows($dataselect)) {?>
+              <?php while($row_brg= mysqli_fetch_array($dataselect)) {?>
+                  <option value="<?php echo $row_brg["kode_produk"]?>"> <?php echo $row_brg["nama_produk"].'&#13; - Rp. '.ribuan($row_brg["harga_jual"]) ?>
+              <?php $jsArray .= "nama_produk['" . $row_brg['kode_produk'] . "'] = {nama_produk:'" . addslashes($row_brg['nama_produk']) . "'};";
+              $jsArray1 .= "harga_jual['" . $row_brg['kode_produk'] . "'] = {harga_jual:'" . addslashes($row_brg['harga_jual']) . "'};";
+              $jsArray2 .= "harga_modal['" . $row_brg['kode_produk'] . "'] = {harga_modal:'" . addslashes($row_brg['harga_modal']) . "'};"; } ?>
+          <?php } ?>
+      </datalist>
+      <span class="position-absolute icon-qr"><i class="fas fa-qrcode text-muted"></i></span>
+      </div>
     </div>
   </div>
+<div class="row">
   <div class="col-sm-4 col-md-4 col-lg-3 mb-3">
     <label class="small text-muted mb-1">Nama Produk</label>
     <input type="text" name="Cnproduk" id="nama_produk" class="form-control form-control-sm bg-light" readonly>
