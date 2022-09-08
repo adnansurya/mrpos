@@ -67,6 +67,12 @@ if(isset($_POST['InputCart']))
     $f = mysqli_fetch_array($cekDulu);
     $inv_c = $f['invoice'];
     $ii = htmlspecialchars($_POST['Cqty']);
+    $operator = $DataLogin['username'];
+    $base_value = $hrg_m * $ii;
+    $profit = $Input5 - $base_value;
+    $daynum = date('j');
+    $monthnum = date('n');
+    $yearnum = date('Y');
 
     if($liat>0){
       $cekbrg = mysqli_query($conn,"SELECT * FROM cart WHERE kode_produk='$Input1' and invoice='$inv_c'");
@@ -79,16 +85,18 @@ if(isset($_POST['InputCart']))
         $i = htmlspecialchars($_POST['Cqty']);
         $baru = $jmlh + $i;
         $baru1 = $jmlh1 * $baru;
+        $profitnew = $baru1 - $base_value;
 
-        $updateaja = mysqli_query($conn,"UPDATE cart SET qty='$baru', subtotal='$baru1' WHERE invoice='$inv_c' and kode_produk='$Input1'");
+        $updateaja = mysqli_query($conn,"UPDATE cart SET qty='$baru', subtotal='$baru1', profit='$profitnew' WHERE invoice='$inv_c' and kode_produk='$Input1'");
         if($updateaja){
            echo '<script>window.location="index.php"</script>';
         } else {
            echo '<script>window.location="index.php"</script>';
         }
       } else {
-      $tambahdata = mysqli_query($conn,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
-       values('$inv_c','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
+        
+      $tambahdata = mysqli_query($conn,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal,cart_type, cart_operator_username, cart_base_value, cart_profit, cart_day, cart_month, cart_year, cart_status)
+       values('$inv_c','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5','SELL','$operator','$base_value','$profit','$daynum','$monthnum','$yearnum','OK' )");
       if ($tambahdata){
           echo '<script>window.location="index.php"</script>';
       } else { echo '<script>window.location="index.php"</script>';
@@ -101,13 +109,13 @@ if(isset($_POST['InputCart']))
   $kodeInfo = $data['kodeTerbesar'];
   $urutan = (int) substr($kodeInfo, 8, 2);
   $urutan++;
-  $huruf = "AD";
+  $huruf = "MRS";
   $oi = $huruf . date("jnyGi") . sprintf("%02s", $urutan);
-    
-    $bikincart = mysqli_query($conn,"INSERT INTO inv (invoice,pembayaran,kembalian,status) values('$oi','','','proses')");
+  $waktuNow = getWaktu();
+    $bikincart = mysqli_query($conn,"INSERT INTO inv (invoice,pembayaran,kembalian,status,tgl_inv, transaction_type) values('$oi','','','proses','$waktuNow','SELL')");
     if($bikincart){
-      $tambahuser = mysqli_query($conn,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
-      values('$oi','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
+      $tambahuser = mysqli_query($conn,"INSERT INTO cart  (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal,cart_type, cart_operator_username, cart_base_value, cart_profit, cart_day, cart_month, cart_year, cart_status)
+      values('$oi','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5','SELL','$operator','$base_value','$profit','$daynum','$monthnum','$yearnum','OK' )");
       if ($tambahuser){
         echo '<script>window.location="index.php"</script>';
       } else { echo '<script>window.location="index.php"</script>';
@@ -235,13 +243,14 @@ if(isset($_POST['import']))
 {
     $Ipembayaran = htmlspecialchars($_POST['pembayaran']);
     $Ikembalian = htmlspecialchars($_POST['kembalian']);
-
+    $waktuNow = getWaktu();
+  
     $UpdCart = mysqli_query($conn,"UPDATE inv SET
-      pembayaran='$Ipembayaran',kembalian='$Ikembalian',status='selesai' WHERE invoice='$noinv'") 
+      pembayaran='$Ipembayaran',kembalian='$Ikembalian',status='OK', tgl_inv='$waktuNow' WHERE invoice='$noinv'")       
      or die (mysqli_connect_error()); 
 
-     $UpdLap = mysqli_query($conn, "INSERT INTO laporan (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
-     SELECT invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal FROM cart") or die (mysqli_connect_error());
+     $UpdLap = mysqli_query($conn, "INSERT INTO laporan (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal,cart_type, cart_operator_username, cart_base_value, cart_profit, cart_day, cart_month, cart_year, cart_status)
+     SELECT invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal,cart_type, cart_operator_username, cart_base_value, cart_profit, cart_day, cart_month, cart_year, cart_status FROM cart") or die (mysqli_connect_error());
 
     $DelCart = mysqli_query($conn,"DELETE FROM cart") or die (mysqli_connect_error());
     

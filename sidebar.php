@@ -14,6 +14,13 @@ $toko = $DataLogin['toko'];
 $alamat = $DataLogin['alamat'];
 $telepon = $DataLogin['telepon'];
 $logo = $DataLogin['logo'];
+
+function getWaktu(){
+  $date = new DateTime("now", new DateTimeZone('Asia/Makassar') );
+  $waktu = $date->format('d/m/Y H:i');
+  return $waktu;
+
+}
 ?>
 <!DOCTYPE html>
 <html>
