@@ -83,8 +83,8 @@ $i4 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal) as isub FROM l
 <div class="d-none pt-5 px-5 print-show">
         <div class="text-center mb-5 pt-2">
             <h2 class="mb-3" style="font-size:60px;"><?php echo $toko ?></h2>
-            <h2 class="mb-0"><?php echo $alamat ?></h2>
-            <h2 class="mb-4">Telp : <?php echo $telepon ?></h2>
+            <h2 class="mb-0">Toddopuli 1 setapak 9 no. 34,<br> Makassar, Sulawesi Selatan</h2>
+            <h2 class="mb-4">HP/WA : <?php echo $telepon ?></h2>
         </div>
             <h2 class="mb-1">Invoice : <?php echo $noinv ?>
           <span class="float-right">Kasir : <?php echo $username ?></span></h2>
@@ -128,7 +128,7 @@ $i4 = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(subtotal) as isub FROM l
             </div>
         </div>
         <div class="col-12 text-center mt-5">
-            <h2>* Terima Kasih Telah Berbelanja Di Adgrafika *</h2>
+            <h2>* Terima Kasih Telah Berbelanja <?php echo $toko; ?> *</h2>
         </div>
     </div><!-- end row -->
 </div><!-- end box print -->
