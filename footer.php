@@ -58,6 +58,7 @@
                 ]
             });
             $('#laporanTbl').DataTable({
+                order: [[0, 'desc']],
                 'processing': true,
                 'serverSide': true,
                 'serverMethod': 'post',
