@@ -118,7 +118,7 @@
                        
                     },{
                         "targets": 7,
-                        "visible": false,
+                        "visible": <?php echo (($username=='adnansurya') ? 'true' : 'false'); ?>,
                         "render": function ( data, type, row ) {                                                      
                             return `<form method="post"> 
                                      <input type="hidden" name="nona" value="`+data+`">
