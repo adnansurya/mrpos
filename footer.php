@@ -53,7 +53,7 @@
                     },
                     {
                         "targets": 5,
-                        "visible": false                                               
+                        "visible": true                                              
                     }
                 ]
             });

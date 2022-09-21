@@ -14,7 +14,7 @@
     <th>Nama Produk</th>
     <th>Harga Modal</th>
     <th>Harga Jual</th>
-    <th>Tgl Input</th>
+    <th>Stok</th>
     <th>Opsi</th>
   </tr>
 </thead>
@@ -30,7 +30,7 @@
     <td><?php echo $d['nama_produk']; ?></td>
     <td><?php echo $d['harga_modal']; ?></td>
     <td><?php echo $d['harga_jual']; ?></td>
-    <td><?php echo $d['tgl_input']; ?></td>
+    <td><?php echo $d['product_stock_amount']; ?></td>
     <td>
         <button type="button" class="btn btn-primary btn-xs mr-1" data-toggle="modal" data-target="#EditProduk<?php echo $d['idproduk']; ?>">
         <i class="fas fa-pencil-alt fa-xs mr-1"></i>Edit
@@ -67,6 +67,10 @@
         <div class="form-group">
             <label class="samll">Harga Jual :</label>
             <input type="number" placeholder="0" name="Edit_Harga_Jual" value="<?php echo $d['harga_jual']; ?>" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label class="samll">Stok :</label>
+            <input type="text" name="Edit_Stok_Produk" value="<?php echo $d['product_stock_amount']; ?>" class="form-control" required>
         </div>
       </div>
       <div class="modal-footer">
@@ -106,8 +110,10 @@ if(isset($_POST['SimpanEdit'])){
     $idproduk1 = htmlspecialchars($_POST['idproduk']);
     $kodeproduk1 = htmlspecialchars($_POST['Edit_Kode_Produk']);
     $namaproduk1 = htmlspecialchars($_POST['Edit_Nama_Produk']);
+    $stokproduk1 = htmlspecialchars($_POST['Edit_Stok_Produk']);
     $harga_modal1 = htmlspecialchars($_POST['Edit_Harga_Modal']);
     $harga_jual1 = htmlspecialchars($_POST['Edit_Harga_Jual']);
+    
 
     $CariProduk = mysqli_query($conn,"SELECT * FROM produk WHERE kode_produk='$kodeproduk1' and idproduk!='$idproduk1'");
     $HasilData = mysqli_num_rows($CariProduk);
@@ -115,7 +121,7 @@ if(isset($_POST['SimpanEdit'])){
     if($HasilData > 0){
         echo '<script>alert("Maaf! kode produk sudah ada");history.go(-1);</script>';
     } else{
-        $cekDataUpdate =  mysqli_query($conn, "UPDATE produk SET kode_produk='$kodeproduk1',
+        $cekDataUpdate =  mysqli_query($conn, "UPDATE produk SET kode_produk='$kodeproduk1', product_stock_amount='$stokproduk1',
         nama_produk='$namaproduk1',harga_modal='$harga_modal1',harga_jual='$harga_jual1'
          WHERE idproduk='$idproduk1'") or die(mysqli_connect_error());
         if($cekDataUpdate){
